@@ -49,11 +49,6 @@ $Form->setTitle("Daily Activity Details for ".$Header." ".$_GET["OrderId"]);
 $Form->DisplayForm();
 HTML::Footer();
 include_once "../Classes/OrderDetailsClass.php";
-if (isset($_POST["Logout"])) {
-    session_unset();
-    session_destroy();
-    header("Location:Login.php");
-}
 if (isset($_POST["AddItem"])) {
     if ($_POST["ProductId"] == "Non") die("Product is Required!");
     if ($_POST["NumberOfProduct"] == "") die("Product Number is Required!!");

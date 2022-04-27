@@ -63,8 +63,6 @@ class Order_Details extends Person implements File
     {
         if($this->OrderId>0&&$this->Product_Id>0&&$this->Numbers>0)
         {
-            $Last_Id_In_file = $this->FileManger->GetLastId();
-            $Order_Details_Id = $this->setId($Last_Id_In_file + 1);
             $Product = new Product();
             $Product = $Product->Get_Info_Of_Product($this->Product_Id);
             $this->Prices = ($Product->getCost() * $this->Numbers);

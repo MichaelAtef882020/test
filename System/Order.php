@@ -47,9 +47,6 @@ if (isset($_POST["AddOrder"])) {
     $Order->Add();
     $OrderId = $Order->getId();
     echo(" <script> location.replace('OrderDetails.php?OrderId=$OrderId'); </script>");
-    unset($_POST["AddOrder"]);
-    unset($_POST["ClintId"]);
-    unset($_POST["Date"]);
 }
 $flag = 0;
 if(isset($_POST["SearchForOrder"]))
@@ -64,10 +61,6 @@ if(isset($_POST["SearchForOrder"]))
     if (in_array("Order-All", $Servis)) HTML::DisplayTable($List,3,"OrderUpdate.php","OrderDel.php");
     else if(in_array("Order-Search", $Servis)) HTML::DisplayTable($List,3);
     else HTML::DisplayTable($List);
-    unset($_POST["SearchForOrder"]);
-    unset($_POST["OrderId"]);
-    unset($_POST["ClintId"]);
-    unset($_POST["Date"]);
 }
 if (isset($_POST["ViewOrderDetails"])) {
     if ($_POST["OrderId"] == "") exit("Order Id is required");
