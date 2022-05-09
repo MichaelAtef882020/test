@@ -3,12 +3,15 @@
 include_once "FileMangerClass.php";
 include_once "PersonClass.php";
 include_once "TypeClass.php";
+include_once "IDisplay.php";
 class User extends Person implements File
 {
 	private $Password;
 	private $TypeId;
 	private $DateOfBirth;
 	private $FileManger;
+
+	private IDisplay $DisplayType;
 	public function __construct(int $Id = null, string $TypeId = null, string $Name = null, string $Password = null, string $DateOfBirth = null)
 	{
 		if ($Id != null) {
@@ -162,5 +165,19 @@ class User extends Person implements File
 	{
 		$this->DateOfBirth = $DateOfBirth;
 		return 1;
+	}
+	/**
+	 * 
+	 * @param IDisplay $DisplayType 
+	 * @return User
+	 */
+	function setDisplayType(IDisplay $DisplayType): self {
+		$this->DisplayType = $DisplayType;
+		return $this;
+	}
+	public function DisplayMenu()
+	{
+		$this->DisplayType->Display($this->TypeId);
+
 	}
 }
