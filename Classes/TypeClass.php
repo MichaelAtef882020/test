@@ -7,7 +7,7 @@ class Type extends Person implements File
     private $Order;
     private $User;
     private $FileType;
-    private $FileMenu;
+    private Data $FileMenu;
     public function __construct($Id = null,$Name = null,$Product=null,$Order=null,$User=null) {
         if($Id!=null) $this->setId($Id);
         else $this->Id = 0;
@@ -101,8 +101,8 @@ class Type extends Person implements File
         if($this->Product == "Product-Non"&&$this->Order == "Order-Non"&&$this->User == "User-Non")
             die("You must choose his features");
         $this->Id =  $this->FileType->GetLastId() + 1;
-        $this->FileType->FileAdd($this->Id.'~'.$this->Name."~\r\n");
-        $this->FileMenu->FileAdd($this->ToString());
+        $this->FileType->Add($this->Id.'~'.$this->Name."~\r\n");
+        $this->FileMenu->Add($this->ToString());
 	}
 	
 	/**
@@ -119,8 +119,8 @@ class Type extends Person implements File
         $OldType = Type::FromStringToObject($this->FileMenu->ValueIsThere($this->Id,0));
         $OldType->setName(explode("~",$this->FileType->ValueIsThere($this->Id,0))[1]);
         if($this->Name=="") $this->Name = $OldType->getName();
-        $this->FileMenu->FileUpdate($this->FileMenu->ValueIsThere($this->Id,0),$this->ToString());
-        $this->FileType->FileUpdate($this->FileType->ValueIsThere($this->Id,0),$this->Id."~".$this->Name."~\r\n");
+        $this->FileMenu->Update($this->FileMenu->ValueIsThere($this->Id,0),$this->ToString());
+        $this->FileType->Update($this->FileType->ValueIsThere($this->Id,0),$this->Id."~".$this->Name."~\r\n");
     }
 	
     static function GetTypeName($Id) {
@@ -219,12 +219,12 @@ class Type extends Person implements File
         if($IsExist = $this->FileType->ValueIsThere($this->Id, 0)) {
             $Array = explode('~',$IsExist);
             $Id =$Array[0];
-            $this->FileType->FileDelete($IsExist);
+            $this->FileType->Delete($IsExist);
             $IsExist = $this->FileMenu->ValueIsThere($Id, 0);
-            $this->FileMenu->FileDelete($IsExist);
+            $this->FileMenu->Delete($IsExist);
             $UserFile = new FileManger("User.txt");
             while($IsExist = $UserFile->ValueIsThere($Id,1)) {
-                $UserFile->FileDelete($IsExist);
+                $UserFile->Delete($IsExist);
             }
         }
 	}

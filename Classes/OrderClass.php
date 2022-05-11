@@ -6,7 +6,7 @@ class order extends Person implements File {
 	private ?float $total = 0;
 	private ?int $ClientId = 0;
 	private ?string $date = "";
-	private $File;
+	private Data $File;
 	public function __construct() {
 		$this->File = new FileManger("Order.txt");
 	}
@@ -39,7 +39,7 @@ class order extends Person implements File {
             if($IsOrderExist==null)
             {
 				$this->total=0;
-                $this->File->FileAdd($this->ToString());
+                $this->File->Add($this->ToString());
             }
             else{
                 echo"the order is exist";
@@ -76,7 +76,7 @@ class order extends Person implements File {
 		if($this->ClientId == 0) $this->ClientId = $OldOrder->getClientId();
 		if($this->date == "") $this->date = $OldOrder->getDate();
 		if($this->total == 0) $this->total = $OldOrder->getTotal();
-		$this->File->FileUpdate($OldOrder->ToString(),$this->ToString());
+		$this->File->Update($OldOrder->ToString(),$this->ToString());
 	}
 	public function UpdateTotal()
 	{
@@ -84,7 +84,7 @@ class order extends Person implements File {
 		$OldOrder = order::FromStringToObject($this->File->ValueIsThere($this->Id,0));
 		$this->ClientId = $OldOrder->getClientId();
 		$this->date = $OldOrder->getDate();
-		$this->File->FileUpdate($OldOrder->ToString(),$this->ToString());
+		$this->File->Update($OldOrder->ToString(),$this->ToString());
 	}
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		$List = $this->File->GetAllContent();
@@ -135,7 +135,7 @@ class order extends Person implements File {
 	}
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null) {
 		if($this->Id == 0) return 0;
-		$this->File->FileDelete($this->File->ValueIsThere($this->Id,0));
+		$this->File->Delete($this->File->ValueIsThere($this->Id,0));
 		$OrderDetails = new Order_Details();
 		$OrderDetails->setId($this->Id);
 		$OrderDetails->DeleteAll();

@@ -1,11 +1,19 @@
 <?php
-class FileManger
+interface Data {
+	public function Add(string $Line);
+	public function Update(string $Old, string $New);
+	public function Delete(string $Data);
+	public function GetLastId();
+	public function GetAllContent();
+	public function ValueIsThere(string $Value, int $Index);
+}
+class FileManger implements Data
 {
 	private $FileName;
 	public function __construct($FileName) {
 		$this->FileName = $FileName;
 	}
-	public function Encrypt() {
+	private function Encrypt() {
 		$contents = file_get_contents("../Files/" . $this->FileName);
 		$Key = 15;
 		$Result = "";
@@ -15,7 +23,7 @@ class FileManger
 		}
 		file_put_contents("../Files/" . $this->FileName, $Result);
 	}
-	public function Decrypt()
+	private function Decrypt()
 	{
 		$contents = file_get_contents("../Files/" . $this->FileName);
 		$Key = 15;
@@ -74,21 +82,14 @@ class FileManger
 		$this->Encrypt();
 		return $List;
 	}
-	function FileAdd(string $Line)
+	function Add(string $Line)
 	{
 		$this->Decrypt();
 		$File = fopen("../Files/" . $this->FileName, 'a');
 		fwrite($File, $Line);
 		$this->Encrypt();
 	}
-	function FileWrite(string $Line)
-	{
-		$this->Decrypt();
-		$File = fopen("../Files/" . $this->FileName, 'w');
-		fwrite($File, $Line);
-		$this->Encrypt();
-	}
-	function FileUpdate(string $Old, string $New)
+	function Update(string $Old, string $New)
 	{
 		$this->Decrypt();
 		$contents = file_get_contents("../Files/" . $this->FileName);
@@ -96,7 +97,7 @@ class FileManger
 		file_put_contents("../Files/" . $this->FileName, $contents);
 		$this->Encrypt();
 	}
-	function FileDelete(string $Data)
+	function Delete(string $Data)
 	{
 		$Array = explode("~",$Data);
 		$DeletedData = "".$Array[0]."~";
@@ -104,7 +105,7 @@ class FileManger
 			$DeletedData.="Deleted~";
 		}
 		$DeletedData.="\r\n";
-		$this->FileUpdate($Data,$DeletedData);
+		$this->Update($Data,$DeletedData);
 	}
 	/**
 	 * 
@@ -122,5 +123,115 @@ class FileManger
 	function setFileName($FileName): self {
 		$this->FileName = $FileName;
 		return $this;
+	}
+}
+class DataBase implements Data
+{
+	
+	/**
+	 *
+	 * @param string $Line
+	 *
+	 * @return mixed
+	 */
+	function Add(string $Line) {
+	}
+	
+	/**
+	 *
+	 * @param string $Old
+	 * @param string $New
+	 *
+	 * @return mixed
+	 */
+	function Update(string $Old, string $New) {
+	}
+	
+	/**
+	 *
+	 * @param string $Data
+	 *
+	 * @return mixed
+	 */
+	function Delete(string $Data) {
+	}
+	
+	/**
+	 *
+	 * @return mixed
+	 */
+	function GetLastId() {
+	}
+	
+	/**
+	 *
+	 * @return mixed
+	 */
+	function GetAllContent() {
+	}
+	
+	/**
+	 *
+	 * @param string $Value
+	 * @param int $Index
+	 *
+	 * @return mixed
+	 */
+	function ValueIsThere(string $Value, int $Index) {
+	}
+}
+class Cloud implements Data
+{
+	
+	/**
+	 *
+	 * @param string $Line
+	 *
+	 * @return mixed
+	 */
+	function Add(string $Line) {
+	}
+	
+	/**
+	 *
+	 * @param string $Old
+	 * @param string $New
+	 *
+	 * @return mixed
+	 */
+	function Update(string $Old, string $New) {
+	}
+	
+	/**
+	 *
+	 * @param string $Data
+	 *
+	 * @return mixed
+	 */
+	function Delete(string $Data) {
+	}
+	
+	/**
+	 *
+	 * @return mixed
+	 */
+	function GetLastId() {
+	}
+	
+	/**
+	 *
+	 * @return mixed
+	 */
+	function GetAllContent() {
+	}
+	
+	/**
+	 *
+	 * @param string $Value
+	 * @param int $Index
+	 *
+	 * @return mixed
+	 */
+	function ValueIsThere(string $Value, int $Index) {
 	}
 }

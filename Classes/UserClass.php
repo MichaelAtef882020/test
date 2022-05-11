@@ -8,7 +8,7 @@ class User extends Person implements File
 	private $Password;
 	private $TypeId;
 	private $DateOfBirth;
-	private $FileManger;
+	private Data $FileManger;
 	public function __construct(int $Id = null, string $TypeId = null, string $Name = null, string $Password = null, string $DateOfBirth = null)
 	{
 		if ($Id != null) {
@@ -80,7 +80,7 @@ class User extends Person implements File
 		if ($this->AllIsSet()) {
 			if (!$this->FileManger->ValueIsThere($this->Name, 2)) {
 				$this->Password = sha1($this->Password);
-				$this->FileManger->FileAdd($this->ToString());
+				$this->FileManger->Add($this->ToString());
 			} else {
 				echo "This UserName is already exists!!";
 			}
@@ -103,7 +103,7 @@ class User extends Person implements File
 		if($this->DateOfBirth == "") $this->DateOfBirth = $OldUser->getDateOfBirth();
 		if($this->Password == "") $this->Password = $OldUser->getPassword();
 		else $this->Password = sha1($this->Password);
-		$this->FileManger->FileUpdate($OldUser->ToString(),$this->ToString());
+		$this->FileManger->Update($OldUser->ToString(),$this->ToString());
 	}
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
@@ -142,7 +142,7 @@ class User extends Person implements File
 	function Delete($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
 		if($this->Id == 0) return 0;
-		$this->FileManger->FileDelete($this->FileManger->ValueIsThere($this->Id,0));
+		$this->FileManger->Delete($this->FileManger->ValueIsThere($this->Id,0));
 	}
 	/**
 	 * 

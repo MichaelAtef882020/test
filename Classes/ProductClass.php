@@ -6,7 +6,7 @@ include_once "PersonClass.php";
 class Product extends Person implements File
 {
 	private ?float $Cost;
-	private $FileManger;
+	private Data $FileManger;
 	function getCost(): float
 	{
 		return $this->Cost;
@@ -45,7 +45,7 @@ class Product extends Person implements File
 		$Last_Id_In_file = $this->FileManger->GetLastId();
 		$this->setId($Last_Id_In_file + 1);
 		$isexist = $this->FileManger->ValueIsThere($this->Name, 2);
-		if ($isexist == null) $this->FileManger->FileAdd($this->ToString());
+		if ($isexist == null) $this->FileManger->Add($this->ToString());
 		else {
 			echo "the product is already exist";
 			return 0;
@@ -79,7 +79,7 @@ class Product extends Person implements File
 		if ($this->getName() == "") {
 			$this->Name = $product->getName();
 		}
-		$this->FileManger->FileUpdate($product->ToString(), $this->ToString());
+		$this->FileManger->Update($product->ToString(), $this->ToString());
 	}
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
@@ -121,7 +121,7 @@ class Product extends Person implements File
 	{
 		if ($this->getId() != 0) {
 			$isexist = $this->FileManger->ValueIsThere($this->getId(), 0);
-			$this->FileManger->FileDelete($isexist);
+			$this->FileManger->Delete($isexist);
 		}
 	}
 }

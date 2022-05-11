@@ -44,7 +44,7 @@ class Order_Details extends Person implements File
     private ?int $Numbers;
     private ?float $Prices;
     private ?int $OrderId;
-    private $FileManger;
+    private Data $FileManger;
     
     /**
      * @param int $input1 ProductId
@@ -67,7 +67,7 @@ class Order_Details extends Person implements File
             $Product = $Product->Get_Info_Of_Product($this->Product_Id);
             $this->Prices = ($Product->getCost() * $this->Numbers);
             $this->UpdateTotalForOrder($this->Prices);
-            $this->FileManger->FileAdd($this->ToString());
+            $this->FileManger->Add($this->ToString());
             return 1;
         }
         else
@@ -108,7 +108,7 @@ class Order_Details extends Person implements File
             }
             $product=Product::Get_Info_Of_Product($this->Product_Id);
             $this->Prices=($this->Numbers*$product->getCost());
-            $this->FileManger->FileUpdate($order_Details->ToString(),$this->ToString());
+            $this->FileManger->Update($order_Details->ToString(),$this->ToString());
             $diference=$this->Prices-$order_Details->getPrices();
             $this->UpdateTotalForOrder($diference);
         }
@@ -200,7 +200,7 @@ class Order_Details extends Person implements File
             return 0;
         }
         $OrderDetails = Order_Details::GetOrderDetail($this->OrderId,$this->Product_Id);
-        $this->FileManger->FileDelete($OrderDetails->ToString());
+        $this->FileManger->Delete($OrderDetails->ToString());
         $Diff = $OrderDetails->getPrices()*-1;
         $this->UpdateTotalForOrder($Diff);
     }
@@ -210,7 +210,7 @@ class Order_Details extends Person implements File
         while($Line = $this->FileManger->ValueIsThere($this->OrderId,0))
         {
             if($Line == null) break;
-            $this->FileManger->FileDelete($Line);
+            $this->FileManger->Delete($Line);
         }
     }
     /**
