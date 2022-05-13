@@ -9,7 +9,9 @@
     $UserFile = new FileManger("User.txt");
     $Line = $UserFile->ValueIsThere($Id, 0);
     $User = User::FromStringToObject($Line);
-    $Servis = $User->GetServices();
+    $User->setDisplayType(new ProductDisplay());
+    $User->DisplayMenu();
+   /* $Servis = $User->GetServices();
     HTML::Header($User->getType());
     $Inputs = [];
     array_push($Inputs,new Input("Id","Activity Id","number"));
@@ -27,7 +29,7 @@
     $Form->setInputs($Inputs);
     $Form->setTitle("Activity");
     $Form->DisplayForm();
-    HTML::Footer();
+    HTML::Footer();*/
     $Flag = 0;
     include_once "../Classes/ProductClass.php";
     if (isset($_POST["Add"])) {
