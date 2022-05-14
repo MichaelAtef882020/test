@@ -1,6 +1,7 @@
 <?php
     include_once "../Classes/OutPutClass.php";
     include_once "../Classes/FileMangerClass.php";
+    include_once "../Classes/ProductClass.php";
     if(session_id() == '') {
         session_start();
     }
@@ -11,8 +12,8 @@
     $User = User::FromStringToObject($Line);
     $User->setDisplayType(new ProductDisplay());
     $User->DisplayMenu();
-   /* $Servis = $User->GetServices();
-    HTML::Header($User->getType());
+    $Servis = $User->GetServices();
+    /*HTML::Header($User->getType());
     $Inputs = [];
     array_push($Inputs,new Input("Id","Activity Id","number"));
     array_push($Inputs,new Input("ProductName","Activity Name","text"));
@@ -31,7 +32,7 @@
     $Form->DisplayForm();
     HTML::Footer();*/
     $Flag = 0;
-    include_once "../Classes/ProductClass.php";
+  
     if (isset($_POST["Add"])) {
         if ($_POST["ProductName"] == "") exit("Product Name required!!");
         if ($_POST["ProductPrice"] == "") exit("Product Price required!!");

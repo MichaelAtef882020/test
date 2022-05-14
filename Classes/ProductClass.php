@@ -3,6 +3,8 @@
 include_once "FileMangerCLass.php";
 include_once "PersonClass.php";
 include_once "TypeClass.php";
+include_once "IDisplay.php";
+
 
 class Product extends Person implements File 
 {
