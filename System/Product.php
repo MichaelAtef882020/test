@@ -13,24 +13,6 @@
     $User->setDisplayType(new ProductDisplay());
     $User->DisplayMenu();
     $Servis = $User->GetServices();
-    /*HTML::Header($User->getType());
-    $Inputs = [];
-    array_push($Inputs,new Input("Id","Activity Id","number"));
-    array_push($Inputs,new Input("ProductName","Activity Name","text"));
-    array_push($Inputs,new Input("ProductPrice","Activity Price","number"));
-    if (in_array("Product-All", $Servis))
-    {
-        array_push($Inputs,new Input("Add","Add","submit"));
-        array_push($Inputs,new Input("Update","Update","submit"));
-        array_push($Inputs,new Input("Delete","Delete","submit"));
-    }
-    array_push($Inputs,new Input("Search","Search","submit"));
-    $Form = new Form();
-    $Form->setActionFile("#");
-    $Form->setInputs($Inputs);
-    $Form->setTitle("Activity");
-    $Form->DisplayForm();
-    HTML::Footer();*/
     $Flag = 0;
   
     if (isset($_POST["Add"])) {

@@ -61,10 +61,7 @@ class Input
 
     function AllIsSet()
     {
-        if($this->Name!="NULL" && $this->Type != "NULL" && $this->Text != "NULL")
-        {
-            return 1;
-        }
+        if($this->Name!="NULL" && $this->Type != "NULL" && $this->Text != "NULL") return 1;
         return 0;
     }
     function DisplayInput()
@@ -100,7 +97,11 @@ class Input
 					?>
 				</select>
 				</div>
-			<?php } else {?>
+			<?php } else if($this->Type == "checkbox") {?>
+				<label class="Check"><?php echo $this->Text ?>
+				<input type="checkbox" name="<?php echo $this->Name?>" value="<?php echo $this->Value?>">
+				<span class="checkmark"></span></label>
+				<?php } else {?>
 				<div>
                 <label>
                     <?php echo $this->Text?>
@@ -182,11 +183,79 @@ class Form
         <form action=<?php echo $this->ActionFile?> method="POST">
             <div class="contact_form-container">
               <div>
+			  <style>
+/* The container */
+.Check {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.Check input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.Check:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.Check input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.Check input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.Check .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+</style>
         <?php
 		$flag = 0;
         for ($i=0; $i < count($this->Inputs); $i++) { 
-			if($this->Inputs[$i]->getType() == "submit" && $flag == 0)
-			{
+			if($this->Inputs[$i]->getType() == "submit" && $flag == 0) {
 				echo "<div class='row'>";
 				$flag = 1;
 			}
