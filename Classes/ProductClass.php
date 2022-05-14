@@ -2,8 +2,9 @@
 
 include_once "FileMangerCLass.php";
 include_once "PersonClass.php";
+include_once "TypeClass.php";
 
-class Product extends Person implements File
+class Product extends Person implements File 
 {
 	private ?float $Cost;
 	private Data $FileManger;
@@ -124,4 +125,33 @@ class Product extends Person implements File
 			$this->FileManger->Delete($isexist);
 		}
 	}
+}
+class ProductDisplay implements IDisplay
+{
+	public function Display($type)
+	{
+		$Servis= Type::FromTypeGetServis($type);
+    HTML::Header($type);
+    $Inputs = [];
+    array_push($Inputs,new Input("Id","Activity Id","number"));
+    array_push($Inputs,new Input("ProductName","Activity Name","text"));
+    array_push($Inputs,new Input("ProductPrice","Activity Price","number"));
+    if (in_array("Product-All", $Servis))
+    {
+        array_push($Inputs,new Input("Add","Add","submit"));
+        array_push($Inputs,new Input("Update","Update","submit"));
+        array_push($Inputs,new Input("Delete","Delete","submit"));
+    }
+    array_push($Inputs,new Input("Search","Search","submit"));
+    $Form = new Form();
+    $Form->setActionFile("#");
+    $Form->setInputs($Inputs);
+    $Form->setTitle("Activity");
+    $Form->DisplayForm();
+    HTML::Footer();
+
+
+	}
+
+
 }
