@@ -26,7 +26,7 @@ if ($Form->InfoIsTaken()) {
     {
         session_start();
         $_SESSION["UserId"] = $UserId;
-        header("Location:index.php");
+        echo(" <script> location.replace('index.php'); </script>");
     }
     else
     {
@@ -34,5 +34,5 @@ if ($Form->InfoIsTaken()) {
     }
 }
 if (isset($_POST["SignUp"])) {
-    header("Location:SignUp.php");
+    echo(" <script> location.replace('SignUp.php'); </script>");
 }
