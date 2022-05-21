@@ -3,6 +3,9 @@
     include_once "../Classes/OutPutClass.php";
     include_once "../Classes/OrderClass.php";
     include_once "../Classes/UserClass.php";
+    include_once "../Classes/AddOn1.php";
+    include_once "../Classes/AddOn2.php";
+    include_once "../Classes/AddOn3.php";
     include_once "../Classes/OrderDetailsClass.php";
     if(!isset($_GET["OrderId"])) echo(" <script> location.replace('index.php'); </script>");
     $Id = $_SESSION["UserId"];
@@ -26,7 +29,6 @@
     $OrderDetails = new Order_Details();
     $OrderDetails->setOrderId($Order->getId());
     $ListOrderDetails = $OrderDetails->Searsh();
-    
     $Form = new Form();
     $Form->setActionFile(("#"));
     $Form->setInputs($Inputs);
@@ -49,7 +51,7 @@
     {
         if($temp==1)
         {
-            $add1=new addon2($add1);
+            $add1=new addon2($add1); // 7sl hena Error
 
         }
         else
@@ -69,9 +71,9 @@
             $add1=new addon3($Order);
         }
     }
-    $add1->AddOn();
+    if($add1!=null) $add1->AddOn();
     echo "<center>";
-    echo "<p>Total: ".$Order->getTotal()+$order->AddOn()."</p><br>";
+    echo "<p>Total: ".$Order->getTotal()."</p><br>";
     echo "</center>";
     echo "<a href='Order.php'> Return To Orders</a>";
     HTML::Footer();
