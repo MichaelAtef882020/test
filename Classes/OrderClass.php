@@ -2,13 +2,17 @@
 include_once "FileMangerClass.php";
 include_once "PersonClass.php";
 include_once "OrderDetailsClass.php";
-class order extends Person implements File {
+class order extends Person implements File ,orderInforation {
 	private ?float $total = 0;
 	private ?int $ClientId = 0;
 	private ?string $date = "";
 	private Data $File;
 	public function __construct() {
 		$this->File = new FileManger("Order.txt");
+	}
+    public function AddOn()
+	{
+		return $this->total;
 	}
 	public function AllIsSet() {
 		if($this->Id==null) return 0;
