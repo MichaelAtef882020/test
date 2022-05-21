@@ -2,6 +2,7 @@
 include_once "FileMangerClass.php";
 include_once "PersonClass.php";
 include_once "OrderDetailsClass.php";
+include_once "OrderInterface.php";
 class order extends Person implements File ,orderInforation {
 	private ?float $total = 0;
 	private ?int $ClientId = 0;

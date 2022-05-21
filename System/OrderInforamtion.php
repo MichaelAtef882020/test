@@ -15,13 +15,37 @@
     $OrderId = $_GET["OrderId"];
     $File = new FileManger("Order.txt");
     $Order = order::FromStringToObject($File->ValueIsThere($OrderId,0));
+    $Inputs = [];
+    array_push($Inputs,new Input("Addon1","Addon1","checkbox"));
+    array_push($Inputs,new Input("Addon2","Addon2","checkbox"));
+    array_push($Inputs,new Input("Addon3","Addon3","checkbox"));
+    array_push($Inputs,new Input("Submit","Place Order","submit"));
+    
+    $File = new FileManger("User.txt");
+    $User = User::FromStringToObject($File->ValueIsThere($Order->getClientId(),0));
+    $OrderDetails = new Order_Details();
+    $OrderDetails->setOrderId($Order->getId());
+    $ListOrderDetails = $OrderDetails->Searsh();
+    
+    $Form = new Form();
+    $Form->setActionFile(("#"));
+    $Form->setInputs($Inputs);
+    $Form->setTitle("Finish Order");
+    $Form->DisplayForm();
+    echo "<center>";
+    echo "Order Id: $OrderId<br>";
+    echo "<p>CLint Name: ".$User->getName()."</p>";
+    echo "<p>Date: ".$Order->getDate()."</p>";
+    echo "</center>";
+    HTML::DisplayTable($ListOrderDetails);
     $temp=0;
-    if("checkbox1")
+    $add1=null;
+    if(isset($_POST["Addon1"]))
     {
         $temp=1;
         $add1=new addon1($Order);
     }
-    if("checkbox2")
+    if(isset($_POST["Addon2"]))
     {
         if($temp==1)
         {
@@ -34,7 +58,7 @@
             $temp=1;
         }
     }
-    if("checkbox3")
+    if(isset($_POST["Addon3"]))
     {
         if($temp==1)
         {
@@ -46,19 +70,8 @@
         }
     }
     $add1->AddOn();
-    $File = new FileManger("User.txt");
-    $User = User::FromStringToObject($File->ValueIsThere($Order->getClientId(),0));
-    $OrderDetails = new Order_Details();
-    $OrderDetails->setOrderId($Order->getId());
-    $ListOrderDetails = $OrderDetails->Searsh();
     echo "<center>";
-    echo "Order Id: $OrderId<br>";
-    echo "<p>CLint Name: ".$User->getName()."</p>";
-    echo "<p>Date: ".$Order->getDate()."</p>";
-    echo "</center>";
-    HTML::DisplayTable($ListOrderDetails);
-    echo "<center>";
-    echo "<p>Total: ".$Order->getTotal()+$order->AddOn."</p><br>";
+    echo "<p>Total: ".$Order->getTotal()+$order->AddOn()."</p><br>";
     echo "</center>";
     echo "<a href='Order.php'> Return To Orders</a>";
     HTML::Footer();
