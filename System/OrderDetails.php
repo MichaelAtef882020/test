@@ -33,32 +33,15 @@ if(isset($_POST["Searsh"]))
     $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
     $OrderDetails->setNumbers(intval($_POST["NumberOfProduct"]));
     $List = $OrderDetails->Searsh();
+    for ($i=0; $i < count($List); $i++) { 
+        array_shift($List[$i]);
+    }
     if (in_array("Order-All", $Servis)) HTML::DisplayTable($List,4,"OrderDetailsUpdate.php","OrderDetailsDel.php");
     else HTML::DisplayTable($List);
     unset($_POST["ProductId"]);
     unset($_POST["NumberOfProduct"]);
 }
 
-if(isset($_POST["DeleteItem"]))
-{
-    $OrderDetails = new Order_Details();
-    if($_POST["ProductId"] == "Non") exit("Product is Required");
-    $OrderDetails->setOrderId(intval($_GET["OrderId"]));
-    $OrderDetails->setProduct_Id(intval($_POST["ProductId"]));
-    $OrderDetails->Delete();
-    unset($_POST["ProductId"]);
-    unset($_POST["NumberOfProduct"]);
-}
-if(isset($_POST["UpdateItem"]))
-{
-    $OrderDetails = new Order_Details();
-    $OrderDetails->setOrderId(intval($_GET["OrderId"]));
-    $OrderDetails->setProduct_Id($_POST["ProductId"]);
-    $OrderDetails->setNumbers($_POST["NumberOfProduct"]);
-    $OrderDetails->Update();
-    unset($_POST["ProductId"]);
-    unset($_POST["NumberOfProduct"]);
-}
 if($flag == 0)
 {
     $OrderDetails = new Order_Details();
@@ -66,6 +49,9 @@ if($flag == 0)
     $OrderDetails->setProduct_Id(0);
     $OrderDetails->setNumbers(0);
     $List = $OrderDetails->Searsh();
+    for ($i=0; $i < count($List); $i++) { 
+        array_shift($List[$i]);
+    }
     if (in_array("Order-All", $User->GetServices())) HTML::DisplayTable($List,4,"OrderDetailsUpdate.php","OrderDetailsDel.php");
     else if(in_array("Order-Add", $User->GetServices())) HTML::DisplayTable($List,4,"OrderDetailsUpdate.php","OrderDetailsDel.php");
     else HTML::DisplayTable($List);

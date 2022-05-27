@@ -34,13 +34,11 @@ array_push($Inputs,$Input);
 if (in_array("User-All", $Servis))
 {
     array_push($Inputs,new Input("AddUser","Add User","submit"));
-    array_push($Inputs,new Input("UpdateUserType","Update User Type","submit"));
-    array_push($Inputs,new Input("SearshForUser","Searsh For User","submit"));
-    array_push($Inputs,new Input("DeleteUser","Delete User","submit"));
+    array_push($Inputs,new Input("SearshForUser","Search For User","submit"));
 }
 else if(in_array("User-Search", $Servis))
 {
-    array_push($Inputs,new Input("SearshForUser","Searsh For User","submit"));
+    array_push($Inputs,new Input("SearshForUser","Search For User","submit"));
 }
 $Form = new Form();
 $Form->setActionFile("#");
@@ -51,16 +49,7 @@ HTML::Footer();
 include_once "../Classes/UserClass.php";
 if (isset($_POST["AddUser"])) {
     echo(" <script> location.replace('SignUp.php'); </script>");
-}
-if (isset($_POST["UpdateUserType"])) {
-    $User = new User();
-    if ($_POST["UserId"] == "") die("User Id is unset!!");
-    if ($_POST["UserType"] == "") die("User type unset!!");
-    $User->setId(intval($_POST["UserId"]));
-    $User->setType($_POST["UserType"]);
-    $User->Update();
-}
-$flag = 0;
+} $flag = 0;
 if (isset($_POST["SearshForUser"])) {
     $flag = 1;
     $User = new User();
@@ -71,14 +60,7 @@ if (isset($_POST["SearshForUser"])) {
     $List = $User->Searsh();
     if (in_array("User-All", $Servis)) HTML::DisplayTable($List,1,"UserUpdate.php","UserDel.php");
     else HTML::DisplayTable($List);
-}
-if (isset($_POST["DeleteUser"])) {
-    if ($_POST["UserId"] == "") die("User Id unset!!");
-    $User = new User();
-    $User->setId(intval($_POST["UserId"]));
-    $User->Delete();
-}
-if($flag == 0)
+} if($flag == 0)
 {
     if(in_array("User-All", $Servis))
     {

@@ -24,16 +24,6 @@
         $New_Product->Add();
         unset($_POST["ProductName"]);
         unset($_POST["ProductPrice"]);
-    } else if (isset($_POST["Update"])) {
-        if ($_POST["Id"] == "") exit("Product Id required!!");
-        $Product = new Product();
-        $Product->SetId($_POST["Id"]);
-        $Product->setName($_POST["ProductName"]);
-        $Product->setCost(floatval($_POST["ProductPrice"]));
-        $Product->Update();
-        unset($_POST["Id"]);
-        unset($_POST["ProductName"]);
-        unset($_POST["ProductPrice"]);
     } else if (isset($_POST["Search"])) {
         $Product = new Product();
         $Product->SetId(intval($_POST["Id"]));
@@ -46,16 +36,7 @@
         unset($_POST["Id"]);
         unset($_POST["ProductName"]);
         unset($_POST["ProductPrice"]);
-    } else if (isset($_POST["Delete"])) {
-        $Product = new Product();
-        if($_POST["Id"] == "") exit("Id is required!!");
-        $Product->SetId(intval($_POST["Id"]));
-        $Product->Delete();
-        unset($_POST["Id"]);
-        unset($_POST["ProductName"]);
-        unset($_POST["ProductPrice"]);
-    }
-    if($Flag == 0)
+    } if($Flag == 0)
     {
         $Product = new Product();
         $Product->SetId(0);
