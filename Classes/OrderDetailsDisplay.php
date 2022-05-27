@@ -31,10 +31,7 @@ class OrderDetailsDisplay implements IDisplay
         if(in_array("Order-Add", $Servis) ||in_array("Order-All", $Servis) )
         {
             array_push($Inputs,new Input("AddItem","Add Item","submit"));
-            array_push($Inputs,new Input("DeleteItem","Delete Item","submit"));
-            array_push($Inputs,new Input("UpdateItem","Update Item","submit"));
             array_push($Inputs,new Input("Searsh","Search For An item","submit"));
-            array_push($Inputs,new Input("PrintOrderInvoice","Print Order Invoice","submit"));
         }
         if(in_array("Order-Search", $Servis))
         {
