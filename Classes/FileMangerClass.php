@@ -7,8 +7,7 @@ interface Data {
 	public function GetAllContent();
 	public function ValueIsThere(string $Value, int $Index);
 }
-class FileManger implements Data
-{
+class FileManger implements Data {
 	private $FileName;
 	public function __construct($FileName) {
 		$this->FileName = $FileName;
@@ -23,8 +22,7 @@ class FileManger implements Data
 		}
 		file_put_contents("../Files/" . $this->FileName, $Result);
 	}
-	private function Decrypt()
-	{
+	private function Decrypt() {
 		$contents = file_get_contents("../Files/" . $this->FileName);
 		$Key = 15;
 		$Result = "";
@@ -34,9 +32,7 @@ class FileManger implements Data
 		}
 		file_put_contents("../Files/" . $this->FileName, $Result);
 	}
-	
-	function GetLastId()
-	{
+	function GetLastId() {
 		$this->Decrypt();
 		$File = fopen("../Files/" . $this->FileName, 'r');
 		$max = 0;
@@ -50,8 +46,7 @@ class FileManger implements Data
 		$this->Encrypt();
 		return $max;
 	}
-	function ValueIsThere(string $Value, int $Index)
-	{
+	function ValueIsThere(string $Value, int $Index) {
 		$this->Decrypt();
 		$File = fopen("../Files/" . $this->FileName, 'r');
 		while ($Line = fgets($File)) {
@@ -67,8 +62,7 @@ class FileManger implements Data
 		$this->Encrypt();
 		return null;
 	}
-	function GetAllContent()
-	{
+	function GetAllContent() {
 		$this->Decrypt();
 		$File = fopen("../Files/" . $this->FileName, 'r');
 		$List = [];
@@ -82,23 +76,20 @@ class FileManger implements Data
 		$this->Encrypt();
 		return $List;
 	}
-	function Add(string $Line)
-	{
+	function Add(string $Line) {
 		$this->Decrypt();
 		$File = fopen("../Files/" . $this->FileName, 'a');
 		fwrite($File, $Line);
 		$this->Encrypt();
 	}
-	function Update(string $Old, string $New)
-	{
+	function Update(string $Old, string $New) {
 		$this->Decrypt();
 		$contents = file_get_contents("../Files/" . $this->FileName);
 		$contents = str_replace($Old, $New, $contents);
 		file_put_contents("../Files/" . $this->FileName, $contents);
 		$this->Encrypt();
 	}
-	function Delete(string $Data)
-	{
+	function Delete(string $Data) {
 		$Array = explode("~",$Data);
 		$DeletedData = "".$Array[0]."~";
 		for ($i=1; $i < count($Array)-1; $i++) { 
@@ -114,7 +105,6 @@ class FileManger implements Data
 	function getFileName() {
 		return $this->FileName;
 	}
-	
 	/**
 	 * 
 	 * @param mixed $FileName 
@@ -125,8 +115,7 @@ class FileManger implements Data
 		return $this;
 	}
 }
-class DataBase implements Data
-{
+class DataBase implements Data {
 	
 	/**
 	 *
@@ -180,8 +169,7 @@ class DataBase implements Data
 	function ValueIsThere(string $Value, int $Index) {
 	}
 }
-class Cloud implements Data
-{
+class Cloud implements Data {
 	
 	/**
 	 *
