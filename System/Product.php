@@ -1,20 +1,27 @@
 <?php
-    include_once "../Classes/OutPutClass.php";
-    include_once "../Classes/FileMangerClass.php";
-    include_once "../Classes/ProductClass.php";
+include_once "Classes.php";
     if(session_id() == '') {
         session_start();
     }
-    include_once "../Classes/UserClass.php";
     $Id = $_SESSION["UserId"];
     $UserFile = new FileManger("User.txt");
     $Line = $UserFile->ValueIsThere($Id, 0);
     $User = User::FromStringToObject($Line);
-    $User->setDisplayType(new ProductDisplay());
-    $User->DisplayMenu();
     $Servis = $User->GetServices();
+    HTML::Header($User->getType());
+    $Form = new Form();
+    $Form->setActionFile("#");
+    $Form->setTitle("Activity");
+    $Form->Attach(new Text("Id", "Activity Id", "number"));
+    $Form->Attach(new Text("ProductName", "Activity Name", "text"));
+    $Form->Attach(new Text("ProductPrice", "Activity Price", "number"));
+    if (in_array("Product-All", $Servis)) {
+        $Form->Attach(new Submit("Add", "Add", "submit"));
+    }
+    $Form->Attach(new Submit("Search", "Search", "submit"));
+    $Form->DisplayForm();
+    HTML::Footer();
     $Flag = 0;
-  
     if (isset($_POST["Add"])) {
         if ($_POST["ProductName"] == "") exit("Product Name required!!");
         if ($_POST["ProductPrice"] == "") exit("Product Price required!!");

@@ -1,17 +1,12 @@
 <?php
-include_once "../Classes/UserClass.php";
-include_once "../Classes/OutPutClass.php";
-
+include_once "Classes.php";
 HTML::Header("non");
-
-$Inputs = [];
-array_push($Inputs,new Input("UserName","Username","text"));
-array_push($Inputs,new Input("Password","Password","password"));
-array_push($Inputs,new Input("Login","Login","submit"));
 $Form = new Form();
 $Form->setActionFile("#");
-$Form->setInputs($Inputs);
 $Form->setTitle("Login");
+$Form->Attach(new Text("UserName","Username","text"));
+$Form->Attach(new Text("Password","Password","password"));
+$Form->Attach(new Submit("Login","Login","submit"));
 $Form->DisplayForm();
 HTML::Footer();
 if ($Form->InfoIsTaken()) {

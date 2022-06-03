@@ -24,8 +24,7 @@ include_once "OrderClass.php";
     hat4yl kol 2lorder details bnfs 2lId
     
 */
-class Order_Details extends Person implements File
-{
+class Order_Details extends Person implements File {
     static public function GetOrderDetail($OId,$PId)
     { 
         $FileManger=new FileManger("Order Details.txt");

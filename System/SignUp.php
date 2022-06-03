@@ -1,8 +1,6 @@
 
 <?php
-include_once "../Classes/OutPutClass.php";
-include_once "../Classes/UserClass.php";
-include_once "../Classes/FileMangerClass.php";
+include_once "Classes.php";
 if(isset($_SESSION["UserId"]))
 {
     $Id = $_SESSION["UserId"];
@@ -16,15 +14,17 @@ else
 {
     HTML::Header("null");
 }
-$Inputs = [];
-array_push($Inputs,new Input("UserName","Username","text"));
-array_push($Inputs,new Input("Password","Password","password"));
-array_push($Inputs,new Input("ConPass","Confirm password","password"));
+$Form = new Form();
+$Form->setActionFile("#");
+$Form->setTitle("Sign Up");
+$Form->Attach(new Text("UserName","Username","text"));
+$Form->Attach(new Text("Password","Password","password"));
+$Form->Attach(new Text("ConPass","Confirm password","password"));
 $UserTypeFile = new FileManger("User Type.txt");
 $List = $UserTypeFile->GetAllContent();
 $Text = [];
 $Value = [];
-$Input = new Input();
+$Input = new Select();
 $Input->setName("Type");
 $Input->setType("select");
 array_push($Text,"Null");
@@ -38,13 +38,10 @@ for ($i = 0; $i < count($List); $i++) {
 }
 $Input->setText($Text);
 $Input->setValue($Value);
-array_push($Inputs,$Input);
-array_push($Inputs,new Input("Date","Date of Birth","date"));
-array_push($Inputs,new Input("submit","Sign Up","submit"));
-$Form = new Form();
-$Form->setActionFile("#");
-$Form->setInputs($Inputs);
-$Form->setTitle("Sign Up");
+$Form->Attach($Input);
+$Form->Attach(new Text("Date","Date of Birth","date"));
+$Form->Attach(new Submit("submit","Sign Up","submit"));
+
 $Form->DisplayForm();
 HTML::Footer();
 if (isset($_POST["submit"])) {

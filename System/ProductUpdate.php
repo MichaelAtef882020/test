@@ -1,8 +1,5 @@
 <?php
-include_once "../Classes/OutPutClass.php";
-include_once "../Classes/ProductClass.php";
-include_once "../Classes/UserClass.php";
-include_once "../Classes/FileMangerClass.php";
+include_once "Classes.php";
 $UserId = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere($UserId, 0);
@@ -11,14 +8,12 @@ HTML::Header($User->getType());
 $Id = $_GET["Id1"];
 $Product = new Product();
 $Product = $Product->Get_Info_Of_Product($Id);
-$Inputs = [];
-array_push($Inputs,new Input("Name","Product Name","text",$Product->getName()));
-array_push($Inputs,new Input("Price","Product Price","number",$Product->getCost()));
-array_push($Inputs,new Input("Update","Update","submit"));
 $Form = new Form();
 $Form->setActionFile("#");
-$Form->setInputs($Inputs);
-$Form->setTitle("Update Activity ".$Product->getId());
+$Form->setTitle("Update Activity " . $Product->getId());
+$Form->Attach(new Text("Name","Product Name","text",$Product->getName()));
+$Form->Attach(new Text("Price","Product Price","number",$Product->getCost()));
+$Form->Attach(new Submit("Update","Update","submit"));
 $Form->DisplayForm();
 HTML::Footer();
 if($Form->InfoIsTaken())

@@ -1,5 +1,5 @@
 <?php
-include_once "../Classes/UserClass.php";
+include_once "Classes.php";
 $User = new User();
 $User->setId(intval($_GET["Id1"]));
 $User->Delete();

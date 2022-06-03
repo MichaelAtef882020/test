@@ -1,29 +1,27 @@
 <?php
 session_start();
-include_once "../Classes/UserClass.php";
-include_once "../Classes/OutPutClass.php";
-include_once "../Classes/FileMangerClass.php";
+include_once "Classes.php";
 $Id = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere($Id, 0);
 $User = User::FromStringToObject($Line);
 $Servis = $User->GetServices();
 HTML::Header($User->getType());
-$Inputs = [];
-array_push($Inputs,new Input("OrderId","Daily Activity Id","number"));
-if ($User->getType() != "3") array_push($Inputs,new Input("ClintId","Clint Id","number"));
-array_push($Inputs,new Input("Date","Date of Daily Activity","date"));
-array_push($Inputs,new Input("Total","Total","number"));
-if (in_array("Order-All", $Servis) || in_array("Order-Add", $Servis)) 
-{   array_push($Inputs,new Input("AddOrder","Add Order","submit"));}
-if (in_array("Order-All", $Servis) || in_array("Order-Search", $Servis))
-{
-    array_push($Inputs,new Input("SearchForOrder","Search for Order","submit"));
-}
 $Form = new Form();
 $Form->setActionFile("#");
-$Form->setInputs($Inputs);
 $Form->setTitle("Daily Activities");
+$Form->Attach(new Text("OrderId","Daily Activity Id","number"));
+if ($User->getType() != "3") $Form->Attach(new Text("ClintId","Clint Id","number"));
+$Form->Attach(new Text("Date","Date of Daily Activity","date"));
+$Form->Attach(new Text("Total","Total","number"));
+if (in_array("Order-All", $Servis) || in_array("Order-Add", $Servis)) 
+{ 
+    $Form->Attach(new Submit("AddOrder","Add Order","submit"));
+}
+if (in_array("Order-All", $Servis) || in_array("Order-Search", $Servis))
+{
+    $Form->Attach(new Submit("SearchForOrder","Search for Order","submit"));
+}
 $Form->DisplayForm();
 HTML::Footer();
 include_once "../Classes/OrderClass.php";

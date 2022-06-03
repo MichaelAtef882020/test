@@ -1,8 +1,5 @@
 <?php
-include_once "../Classes/OutPutClass.php";
-include_once "../Classes/OrderClass.php";
-include_once "../Classes/UserClass.php";
-include_once "../Classes/OrderDetailsClass.php";
+include_once "Classes.php";
 if(!isset($_GET["OrderId"])) echo(" <script> location.replace('index.php'); </script>");
 $Id = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");

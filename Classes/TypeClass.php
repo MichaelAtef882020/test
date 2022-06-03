@@ -1,8 +1,7 @@
 <?php
 include_once "PersonClass.php";
 include_once "FileMangerClass.php";
-class Type extends Person implements File
-{
+class Type extends Person implements File {
     private $Product;
     private $Order;
     private $User;

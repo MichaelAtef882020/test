@@ -1,15 +1,12 @@
 <?php
-
-include_once "../Classes/OutPutClass.php";
-include_once "../Classes/UserClass.php";
-include_once "../Classes/FileMangerClass.php";
+include_once "Classes.php";
 $UserId = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere( $UserId, 0);
 $UserNow = User::FromStringToObject($Line);
 HTML::Header($UserNow->getType());
 $User = User::FromStringToObject($UserFile->ValueIsThere($_GET["Id1"],0));
-$Input = new Input();
+$Input = new Select();
 $Texts = [];
 $Values = [];
 $UserTypeFile = new FileManger("User Type.txt");
@@ -28,16 +25,14 @@ $Input->setText($Texts);
 $Input->setName("Type");
 $Input->setValue($Values);
 $Input->setType("select");
-$Inputs = [];
-array_push($Inputs,$Input);
-array_push($Inputs,new Input("Update","Set New Values","submit"));
 $Form = new Form();
 $Form->setActionFile("#");
-$Form->setInputs($Inputs);
-$Form->setTitle("Update User ".$User->getId()."<br> Name: ".$User->getName());
+$Form->setTitle("Update User " . $User->getId() . "<br> Name: " . $User->getName());
+$Inputs = [];
+$Form->Attach($Input);
+$Form->Attach(new Submit("Update","Set New Values","submit"));
 $Form->DisplayForm();
 HTML::Footer();
-
 if($Form->InfoIsTaken())
 {
     $UpdatedUser = new User();

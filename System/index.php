@@ -1,7 +1,5 @@
 <?php
-include_once "../Classes/OutPutClass.php";
-include_once "../Classes/FileMangerClass.php";
-include_once "../Classes/UserClass.php";
+include_once "Classes.php";
 if(session_id() == '') {
     session_start();
 }
@@ -16,29 +14,29 @@ if($Line!=null)
     HTML::Header($User->getType());
 }
 else HTML::Header("non");
+
+$Form = new Form();
+$Form->setActionFile("#");
+$Form->setTitle("Menu");
 $Servis = $User->GetServices();
-$Inputs = [];
 if(!str_contains($Servis[0],"Product-Non")) 
 {
-    array_push($Inputs,new Input("Product","Activity","submit"));
+    $Form->Attach(new Submit("Product","Activity","submit"));
 }
 if(!str_contains($Servis[1],"Order-Non"))
 {
-    array_push($Inputs,new Input("Order","Daily Activities","submit"));
+    $Form->Attach(new Submit("Order","Daily Activities","submit"));
 }
 if(!str_contains($Servis[2],"User-Non"))
 {
-    array_push($Inputs,new Input("User","User","submit"));
+    $Form->Attach(new Submit("User","User","submit"));
 }
 if($User->getType() == "1")
 {
-    array_push($Inputs,new Input("Type","User Types","submit"));
+    $Form->Attach(new Submit("Type","User Types","submit"));
 }
-array_push($Inputs,new Input("Profile","Profile","submit"));
-$Form = new Form();
-$Form->setActionFile("#");
-$Form->setInputs($Inputs);
-$Form->setTitle("Menu");
+$Form->Attach(new Submit("Profile","Profile","submit"));
+
 $Form->DisplayForm();
 
 HTML::Footer();

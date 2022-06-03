@@ -2,23 +2,23 @@
 include_once "FileMangerClass.php";
 include_once "PersonClass.php";
 include_once "OrderDetailsClass.php";
-class order extends Person implements File ,orderInforation {
+class order extends Person implements File {
 	private ?float $total = 0;
 	private ?int $ClientId = 0;
 	private ?string $date = "";
 	private Data $File;
+	private IPay $PayObj;
 	public function __construct() {
 		$this->File = new FileManger("Order.txt");
-	}
-    public function AddOn()
-	{
-		return $this->total;
 	}
 	public function AllIsSet() {
 		if($this->Id==null) return 0;
 		if($this->ClientId==0) return 0;
 		if($this->date=="") return 0;
 		return 1;
+	}
+	public function FinishOrder() {
+		$this->PayObj->Pay($this->Id);
 	}
 	/**
 	 *
@@ -55,8 +55,7 @@ class order extends Person implements File ,orderInforation {
             return 0;
         }
 	}
-    static function FromStringToObject($string)
-	{
+    static function FromStringToObject($string) {
        $Array_Of_String=explode("~",$string);
 	   $Order=new order();
 	   $Order->setId(intval($Array_Of_String[0]));
@@ -65,8 +64,7 @@ class order extends Person implements File ,orderInforation {
 	   $Order->setTotal($Array_Of_String[3]);
 	   return $Order;
 	}
-	public function SetInfoFromId($Id)
-	{
+	public function SetInfoFromId($Id) {
 		$Order = order::FromStringToObject($this->File->ValueIsThere($Id,0));
 		$this->setId($Order->getId());
 		$this->setClientId($Order->getClientId());
@@ -82,8 +80,7 @@ class order extends Person implements File ,orderInforation {
 		if($this->total == 0) $this->total = $OldOrder->getTotal();
 		$this->File->Update($OldOrder->ToString(),$this->ToString());
 	}
-	public function UpdateTotal()
-	{
+	public function UpdateTotal() {
 		if($this->Id == 0) return 0;
 		$OldOrder = order::FromStringToObject($this->File->ValueIsThere($this->Id,0));
 		$this->ClientId = $OldOrder->getClientId();
@@ -144,35 +141,32 @@ class order extends Person implements File ,orderInforation {
 		$OrderDetails->setId($this->Id);
 		$OrderDetails->DeleteAll();
 		return 1;
-	}
-	
+	}	
 	function getDate(): string {
 		return $this->date;
-	}
-	
+	}	
 	function setDate(string $date): int  {
 		if($date <= 0) return 0;
 		$this->date = $date;
 		return 1;
 	}
-
 	function getClientId(): int {
 		return $this->ClientId;
 	}
-	
-
 	function setClientId(int $ClientId): int  {
 		if($ClientId <= 0) return 0;
 		$this->ClientId = $ClientId;
 		return 1;
 	}
-
 	function getTotal(): ?float {
 		return $this->total;
 	}
-	
 	function setTotal(?float $total): self {
 		$this->total = $total;
+		return $this;
+	}
+	function setPayObj(IPay $PayObj): self {
+		$this->PayObj = $PayObj;
 		return $this;
 	}
 }

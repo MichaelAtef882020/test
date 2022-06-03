@@ -1,8 +1,6 @@
 <?php
 session_start();
-include_once "../Classes/UserClass.php";
-include_once "../Classes/OutPutClass.php";
-include_once "../Classes/FileMangerClass.php";
+include_once "Classes.php";
 $Id = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere($Id, 0);
@@ -10,11 +8,13 @@ $User = User::FromStringToObject($Line);
 $Servis = $User->GetServices();
 
 HTML::Header($User->getType());
-$Inputs = [];
-array_push($Inputs,new Input("UserId","User Id","number"));
-array_push($Inputs,new Input("UserName","User Name","text"));
-array_push($Inputs,new Input("DateOfBirth","Date of Birth","date"));
-$Input = new Input();
+$Form = new Form();
+$Form->setActionFile("#");
+$Form->setTitle("Users");
+$Form->Attach(new Text("UserId","User Id","number"));
+$Form->Attach(new Text("UserName","User Name","text"));
+$Form->Attach(new Text("DateOfBirth","Date of Birth","date"));
+$Input = new Select();
 $Texts = ["Non"];
 $Values = ["0"];
 $UserTypeFile = new FileManger("User Type.txt");
@@ -30,20 +30,17 @@ $Input->setText($Texts);
 $Input->setName("UserType");
 $Input->setValue($Values);
 $Input->setType("select");
-array_push($Inputs,$Input);
+
+$Form->Attach($Input);
 if (in_array("User-All", $Servis))
 {
-    array_push($Inputs,new Input("AddUser","Add User","submit"));
-    array_push($Inputs,new Input("SearshForUser","Search For User","submit"));
+    $Form->Attach(new Submit("AddUser","Add User","submit"));
+    $Form->Attach(new Submit("SearshForUser","Search For User","submit"));
 }
 else if(in_array("User-Search", $Servis))
 {
-    array_push($Inputs,new Input("SearshForUser","Search For User","submit"));
+    $Form->Attach(new Submit("SearshForUser","Search For User","submit"));
 }
-$Form = new Form();
-$Form->setActionFile("#");
-$Form->setInputs($Inputs);
-$Form->setTitle("Users");
 $Form->DisplayForm();
 HTML::Footer();
 include_once "../Classes/UserClass.php";

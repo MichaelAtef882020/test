@@ -1,5 +1,5 @@
 <?php
-include_once "../Classes/OrderDetailsClass.php";
+include_once "Classes.php";
 $OrderDetails = new Order_Details();
 $OrderDetails->setOrderId(intval($_GET["Id1"]));
 $ProductName = $_GET["Id2"];

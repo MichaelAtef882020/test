@@ -3,7 +3,6 @@
 include_once "FileMangerCLass.php";
 include_once "PersonClass.php";
 include_once "TypeClass.php";
-include_once "IDisplay.php";
 class Product extends Person implements File 
 {
 	private ?float $Cost;
@@ -84,7 +83,6 @@ class Product extends Person implements File
 	}
 	function Searsh($input1 = null, $input2 = null, $input3 = null, $input4 = null)
 	{
-
 		$list = [];
 		$Temp = ["Id", "Price", "Name"];
 		array_push($list, $Temp);
@@ -125,29 +123,4 @@ class Product extends Person implements File
 			$this->FileManger->Delete($isexist);
 		}
 	}
-}
-class ProductDisplay implements IDisplay
-{
-	public function Display($type)
-	{
-		$Servis= Type::FromTypeGetServis($type);
-		HTML::Header($type);
-		$Inputs = [];
-		array_push($Inputs,new Input("Id","Activity Id","number"));
-		array_push($Inputs,new Input("ProductName","Activity Name","text"));
-		array_push($Inputs,new Input("ProductPrice","Activity Price","number"));
-		if (in_array("Product-All", $Servis))
-		{
-			array_push($Inputs,new Input("Add","Add","submit"));
-		}
-		array_push($Inputs,new Input("Search","Search","submit"));
-		$Form = new Form();
-		$Form->setActionFile("#");
-		$Form->setInputs($Inputs);
-		$Form->setTitle("Activity");
-		$Form->DisplayForm();
-		HTML::Footer();
-	}
-
-
 }

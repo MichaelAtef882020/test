@@ -1,5 +1,5 @@
 <?php
-include_once "../Classes/OrderClass.php";
+include_once "Classes.php";
 $Order = new Order();
 $Order->setId(intval($_GET["Id1"]));
 $Order->Delete();

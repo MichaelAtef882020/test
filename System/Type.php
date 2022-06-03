@@ -1,37 +1,35 @@
-<?php 
-include_once "../Classes/OutPutClass.php";
-include_once "../Classes/TypeClass.php";
+<?php
+include_once "Classes.php";
 HTML::Header("1");
-$Inputs =[];
-array_push($Inputs,new Input("Id","Type Id","number"));
-array_push($Inputs,new Input("Name","Type Name","text"));
-$Input = new Input();
+$Form = new Form();
+$Form->setActionFile("#");
+$Form->setTitle("Types of Users");
+$Form->Attach(new Text("Id","Type Id","number"));
+$Form->Attach(new Text("Name","Type Name","text"));
+$Input = new Select();
 $Input->setName("Product");
 $Text = ["Non","All","Add","Search"];
 $Input->setText($Text);
 $Input->setValue($Text);
 $Input->setType("select");
-array_push($Inputs,$Input);
-$Input = new Input();
+$Form->Attach($Input);
+$Input = new Select();
 $Input->setName("Order");
 $Text = ["Non","All","Add","Search"];
 $Input->setText($Text);
 $Input->setValue($Text);
 $Input->setType("select");
-array_push($Inputs,$Input);
-$Input = new Input();
+$Form->Attach($Input);
+$Input = new Select();
 $Input->setName("User");
 $Text = ["Non","All","Search"];
 $Input->setText($Text);
 $Input->setValue($Text);
 $Input->setType("select");
-array_push($Inputs,$Input);
-array_push($Inputs,new Input("Add","Add","submit"));
-array_push($Inputs,new Input("Search","Search","submit"));
-$Form = new Form();
-$Form->setActionFile("#");
-$Form->setInputs($Inputs);
-$Form->setTitle("Types of Users");
+$Form->Attach($Input);
+$Form->Attach(new Submit("Add","Add","submit"));
+$Form->Attach(new Submit("Search","Search","submit"));
+
 $Form->DisplayForm();
 HTML::Footer();
 if(isset($_POST["Add"]))
