@@ -45,7 +45,7 @@ $Form->DisplayForm();
 HTML::Footer();
 include_once "../Classes/UserClass.php";
 if (isset($_POST["AddUser"])) {
-    echo(" <script> location.replace('SignUp.php'); </script>");
+    echo(" <script> location.replace('../Login/SignUp.php'); </script>");
 } $flag = 0;
 if (isset($_POST["SearshForUser"])) {
     $flag = 1;
