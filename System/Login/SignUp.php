@@ -1,6 +1,6 @@
 
 <?php
-include_once "Classes.php";
+include_once "../Classes.php";
 if(isset($_SESSION["UserId"]))
 {
     $Id = $_SESSION["UserId"];
@@ -60,7 +60,7 @@ if (isset($_POST["submit"])) {
         $newUser->Add();
         if(isset($_SESSION["UserId"]))
         {
-            echo(" <script> location.replace('User.php'); </script>");
+            echo(" <script> location.replace('../User/index.php'); </script>");
         }
         else
         {
@@ -68,7 +68,7 @@ if (isset($_POST["submit"])) {
                 session_start();
             }
             $_SESSION["UserId"] = $newUser->getId();
-            echo(" <script> location.replace('index.php'); </script>");
+            echo(" <script> location.replace('../index.php'); </script>");
             exit();
         }
         

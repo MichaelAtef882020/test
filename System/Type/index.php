@@ -1,5 +1,5 @@
 <?php
-include_once "Classes.php";
+include_once "../Classes.php";
 HTML::Header("1");
 $Form = new Form();
 $Form->setActionFile("#");

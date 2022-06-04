@@ -1,5 +1,5 @@
 <?php
-include_once "Classes.php";
+include_once "../Classes.php";
 $Id = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere($Id, 0);
@@ -56,7 +56,7 @@ if (isset($_POST["AddItem"])) {
 }
 if(isset($_POST["Finish"])) { 
     $OrderId = $_GET["OrderId"];
-    echo (" <script> location.replace('OrderExtra.php?OrderId=$OrderId'); </script>");
+    echo (" <script> location.replace('../Order/OrderExtra.php?OrderId=$OrderId'); </script>");
 }
 $flag = 0;
 if(isset($_POST["Searsh"]))

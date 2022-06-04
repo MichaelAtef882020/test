@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once "Classes.php";
+include_once "../Classes.php";
 $Id = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere($Id, 0);
@@ -36,7 +36,7 @@ if (isset($_POST["AddOrder"])) {
     $Order->setDate($_POST["Date"]);
     $Order->Add();
     $OrderId = $Order->getId();
-    echo(" <script> location.replace('OrderDetails.php?OrderId=$OrderId'); </script>");
+    echo(" <script> location.replace('../OrderDetails/index.php?OrderId=$OrderId'); </script>");
 }
 $flag = 0;
 if(isset($_POST["SearchForOrder"]))

@@ -1,5 +1,5 @@
 <?php
-include_once "Classes.php";
+include_once "../Classes.php";
 HTML::Header("non");
 $Form = new Form();
 $Form->setActionFile("#");
@@ -21,7 +21,7 @@ if ($Form->InfoIsTaken()) {
     {
         session_start();
         $_SESSION["UserId"] = $UserId;
-        echo(" <script> location.replace('index.php'); </script>");
+        echo(" <script> location.replace('../index.php'); </script>");
     }
     else
     {

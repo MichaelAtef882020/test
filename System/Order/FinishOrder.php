@@ -1,5 +1,5 @@
 <?php
-include_once "Classes.php";
+include_once "../Classes.php";
 if(!isset($_GET["OrderId"])) echo(" <script> location.replace('index.php'); </script>");
 $Id = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
@@ -47,7 +47,7 @@ if(isset($_POST["Submit"])) {
     else if($c > 1) echo "You Must Chose Only One from the options";
     else {
         $Order->FinishOrder();
-        echo (" <script> location.replace('Order.php'); </script>");
+        echo (" <script> location.replace('index.php'); </script>");
     }
 }
 HTML::Footer();

@@ -1,5 +1,5 @@
 <?php
-include_once "Classes.php";
+include_once "../Classes.php";
 $OrderDetails = new Order_Details();
 $OrderDetails->setOrderId(intval($_GET["Id1"]));
 $ProductName = $_GET["Id2"];
@@ -9,4 +9,4 @@ $ProductId = explode("~",$File->ValueIsThere($ProductName,2))[0];
 $OrderDetails->setProduct_Id(intval($ProductId));
 $OrderDetails->Delete();
 $Id1 = $_GET["Id1"];
-echo(" <script> location.replace('OrderDetails.php?OrderId=$Id1'); </script>");
+echo(" <script> location.replace('index.php?OrderId=$Id1'); </script>");

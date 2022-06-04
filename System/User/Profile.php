@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-include_once "Classes.php";
+include_once "../Classes.php";
 $Id = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere($Id, 0);

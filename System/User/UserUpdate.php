@@ -1,5 +1,5 @@
 <?php
-include_once "Classes.php";
+include_once "../Classes.php";
 $UserId = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere( $UserId, 0);
@@ -39,5 +39,5 @@ if($Form->InfoIsTaken())
     $UpdatedUser->setId($User->getId());
     $UpdatedUser->setType($_POST["Type"]);
     $UpdatedUser->Update();
-    echo(" <script> location.replace('User.php'); </script>");
+    echo(" <script> location.replace('index.php'); </script>");
 }

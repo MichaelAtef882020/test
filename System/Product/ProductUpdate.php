@@ -1,5 +1,5 @@
 <?php
-include_once "Classes.php";
+include_once "../Classes.php";
 $UserId = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
 $Line = $UserFile->ValueIsThere($UserId, 0);
@@ -22,5 +22,5 @@ if($Form->InfoIsTaken())
     $Product->setName($_POST["Name"]);
     $Product->setCost($_POST["Price"]);
     $Product->Update();
-    echo(" <script> location.replace('Product.php'); </script>");
+    echo(" <script> location.replace('index.php'); </script>");
 }

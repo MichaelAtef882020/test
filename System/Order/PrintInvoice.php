@@ -1,5 +1,5 @@
 <?php
-include_once "Classes.php";
+include_once "../Classes.php";
 if(!isset($_GET["OrderId"])) echo(" <script> location.replace('index.php'); </script>");
 $Id = $_SESSION["UserId"];
 $UserFile = new FileManger("User.txt");
@@ -23,5 +23,5 @@ HTML::DisplayTable($ListOrderDetails);
 echo "<center>";
 echo "<p>Total: ".$Order->getTotal()."</p><br>";
 echo "</center>";
-echo "<a href='Order.php'> Return To Orders</a>";
+echo "<a href='index.php'> Return To Orders</a>";
 HTML::Footer();
