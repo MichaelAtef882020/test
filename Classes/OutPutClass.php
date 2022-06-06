@@ -2,12 +2,14 @@
 if (session_id() == '') {
 	session_start();
 }
-abstract class IDisplayInput {
+abstract class IDisplayInput
+{
 	protected $Name;
 	protected $Type;
 	protected $Text;
 	protected $Value;
-	public function __construct($Name = "NULL", $Text = "NULL", $Type = "NULL", $Value = null) {
+	public function __construct($Name = "NULL", $Text = "NULL", $Type = "NULL", $Value = null)
+	{
 		if ($Name == "NULL") {
 			$this->Name = "NULL";
 			$this->Type = "NULL";
@@ -21,40 +23,50 @@ abstract class IDisplayInput {
 		}
 	}
 	public abstract function Display();
-	function getName() {
+	function getName()
+	{
 		return $this->Name;
 	}
-	function setName($Name): self {
+	function setName($Name): self
+	{
 		$this->Name = $Name;
 		return $this;
 	}
-	function getType() {
+	function getType()
+	{
 		return $this->Type;
 	}
-	function setType($Type): self {
+	function setType($Type): self
+	{
 		$this->Type = $Type;
 		return $this;
 	}
-	function AllIsSet() {
+	function AllIsSet()
+	{
 		if ($this->Name != "NULL" && $this->Type != "NULL" && $this->Text != "NULL") return 1;
 		return 0;
 	}
-	function getText() {
+	function getText()
+	{
 		return $this->Text;
 	}
-	function setText($Text): self {
+	function setText($Text): self
+	{
 		$this->Text = $Text;
 		return $this;
 	}
-	function getValue() {
+	function getValue()
+	{
 		return $this->Value;
 	}
-	function setValue($Value): self {
+	function setValue($Value): self
+	{
 		$this->Value = $Value;
 		return $this;
 	}
 }
-class Submit extends IDisplayInput {
+class Submit extends IDisplayInput
+{
 	public function __construct($Name = "NULL", $Text = "NULL", $Type = "NULL", $Value = null)
 	{
 		$this->Type = "submit";
@@ -81,7 +93,8 @@ class Submit extends IDisplayInput {
 		<?php	}
 	}
 }
-class Select extends IDisplayInput {
+class Select extends IDisplayInput
+{
 	function Display()
 	{ ?>
 		<div>
@@ -107,7 +120,8 @@ class Select extends IDisplayInput {
 		</div>
 	<?php }
 }
-class CheckBox extends IDisplayInput {
+class CheckBox extends IDisplayInput
+{
 	public function Display()
 	{ ?>
 		<label class="Check"><?php echo $this->Text ?>
@@ -115,36 +129,43 @@ class CheckBox extends IDisplayInput {
 			<span class="checkmark"></span></label>
 	<?php }
 }
-class Text extends IDisplayInput {
-	public function Display() { ?>
+class Text extends IDisplayInput
+{
+	public function Display()
+	{ ?>
 		<div>
 			<label>
 				<?php echo $this->Text ?>
 				<input type=<?php echo $this->Type ?> name=<?php echo $this->Name ?> value=<?php if (isset($this->Value)) echo $this->Value ?>>
 			</label>
 		</div>
-<?php }
+	<?php }
 }
 // Form aggregate array Inputs
-class Form {
+class Form
+{
 	private $Title;
 	private $ActionFile;
 	private $Inputs;
-	public function __construct() {
+	public function __construct()
+	{
 		$this->Title = "NULL";
 		$this->ActionFile = "NULL";
 		$this->Inputs = array();
 	}
-	public function AllIsSet() {
+	public function AllIsSet()
+	{
 		if ($this->Title == "NULL") return 0;
 		if ($this->ActionFile == "NULL") return 0;
 		if (count($this->Inputs) == 0) return 0;
 		return 1;
 	}
-	public function Attach(IDisplayInput $var) {
-		array_push($this->Inputs,$var);
+	public function Attach(IDisplayInput $var)
+	{
+		array_push($this->Inputs, $var);
 	}
-	public function DisplayForm() {
+	public function DisplayForm()
+	{
 		if ($this->AllIsSet() == 0) return 0;
 	?>
 		<section class="contact_section layout_padding">
@@ -248,7 +269,8 @@ class Form {
 		</section>
 	<?php
 	}
-	public function InfoIsTaken() {
+	public function InfoIsTaken()
+	{
 		for ($i = 0; $i < count($this->Inputs); $i++) {
 			if ($this->Inputs[$i]->getType() == "submit") {
 				if (isset($_POST[$this->Inputs[$i]->getName()])) {
@@ -258,24 +280,29 @@ class Form {
 		}
 		return false;
 	}
-	function getTitle() {
+	function getTitle()
+	{
 		return $this->Title;
 	}
-	function setTitle($Title): self {
+	function setTitle($Title): self
+	{
 		$this->Title = $Title;
 		return $this;
 	}
-	function getActionFile() {
+	function getActionFile()
+	{
 		return $this->ActionFile;
 	}
-	function setActionFile($ActionFile): self {
+	function setActionFile($ActionFile): self
+	{
 		$this->ActionFile = $ActionFile;
 		return $this;
 	}
 }
 
 // Sealed class
-class HTML {
+class HTML
+{
 	private function __construct()
 	{
 	}
@@ -302,10 +329,15 @@ class HTML {
 			<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
 
 			<!-- bootstrap core css -->
-			<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+			<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
 
 			<!-- fonts style -->
 			<link href="https://fonts.googleapis.com/css?family=Dosis:400,500|Poppins:400,600,700&display=swap" rel="stylesheet">
+			<!-- Custom styles for this template -->
+			<link href="../css/style.css" rel="stylesheet" />
+			<!-- responsive style -->
+			<link href="../css/responsive.css" rel="stylesheet" />
+			<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 			<!-- Custom styles for this template -->
 			<link href="css/style.css" rel="stylesheet" />
 			<!-- responsive style -->
@@ -318,7 +350,7 @@ class HTML {
 				<header class="header_section">
 					<div class="container-fluid">
 						<nav class="navbar navbar-expand-lg custom_nav-container">
-							<a class="navbar-brand" href="index.php">
+							<a class="navbar-brand" href="../index.php">
 								<span>
 									Orphanage Management System
 								</span>
@@ -329,19 +361,19 @@ class HTML {
 									<ul class="navbar-nav">
 										<?php if (isset($_SESSION["UserId"])) { ?>
 											<li class="nav-item">
-												<a class="nav-link" href="Logout.php">
-													<img src="images/login.png" alt="" />
+												<a class="nav-link" href="../Login/Logout.php">
+													<img src="../images/login.png" alt="" />
 													<span>Logout</span></a>
 											</li>
 										<?php } else { ?>
 											<li class="nav-item">
-												<a class="nav-link" href="Login.php">
-													<img src="images/login.png" alt="" />
+												<a class="nav-link" href="../Login/Login.php">
+													<img src="../images/login.png" alt="" />
 													<span>Login</span></a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link" href="SignUp.php">
-													<img src="images/signup.png" alt="" />
+												<a class="nav-link" href="../Login/SignUp.php">
+													<img src="../images/signup.png" alt="" />
 													<span>Sign Up</span>
 												</a>
 											</li>
@@ -363,20 +395,20 @@ class HTML {
 									</div>
 									<div id="myNav" class="overlay">
 										<div class="overlay-content">
-											<a href="index.php">HOME</a>
+											<a href="../index.php">HOME</a>
 											<?php if (!str_contains($Servis[0], "Product-Non")) { ?>
-												<a href="Product.php">Activities</a>
+												<a href="../Product/index.php">Activities</a>
 											<?php } ?>
 											<?php if (!str_contains($Servis[1], "Order-Non")) { ?>
-												<a href="Order.php">Daily Activities</a>
+												<a href="../Order/index.php">Daily Activities</a>
 											<?php } ?>
 											<?php if (!str_contains($Servis[2], "User-Non")) { ?>
-												<a href="User.php">User</a>
+												<a href="../User/index.php">User</a>
 											<?php } ?>
 											<?php if ($Type == "1") { ?>
-												<a href="Type.php">Type of Users</a>
+												<a href="../Type/index.php">Type of Users</a>
 											<?php } ?>
-											<a href="Profile.php">Profile</a>
+											<a href="../User/Profile.php">Profile</a>
 										</div>
 									<?php } ?>
 									</div>
@@ -390,7 +422,7 @@ class HTML {
 	}
 	static public function Footer()
 	{
-		
+
 		?>
 			</section>
 			<script>
@@ -423,9 +455,8 @@ class HTML {
 			$Id2 = $List[$i][1];
 			if ($Type == 3) {
 				if ($i != 0) {
-
 					echo "<th style='padding: 12px 15px;'><a href='PrintInvoice.php?OrderId=$Id1'>Print</a></th>";
-					echo "<th style='padding: 12px 15px;'><a href='OrderDetails.php?OrderId=$Id1'>Order Details</a></th>";
+					echo "<th style='padding: 12px 15px;'><a href='../OrderDetails/index.php?OrderId=$Id1'>Order Details</a></th>";
 				} else {
 					echo "<th style='padding: 12px 15px;' >Print</th>";
 					echo "<th style='padding: 12px 15px;' >Order Details</th>";

@@ -10,31 +10,32 @@ interface Data {
 class FileManger implements Data {
 	private $FileName;
 	public function __construct($FileName) {
-		$this->FileName = $FileName;
+		if(file_exists("../../Files/" . $FileName)) $this->FileName = "../../Files/" . $FileName;
+		else $this->FileName = "../Files/" . $FileName;
 	}
 	private function Encrypt() {
-		$contents = file_get_contents("../Files/" . $this->FileName);
+		$contents = file_get_contents($this->FileName);
 		$Key = 15;
 		$Result = "";
 		for ($i = 0; $i < strlen($contents); $i++) {
 			$c = chr(ord($contents[$i]) + $Key + $i);
 			$Result .= $c;
 		}
-		file_put_contents("../Files/" . $this->FileName, $Result);
+		file_put_contents($this->FileName, $Result);
 	}
 	private function Decrypt() {
-		$contents = file_get_contents("../Files/" . $this->FileName);
+		$contents = file_get_contents($this->FileName);
 		$Key = 15;
 		$Result = "";
 		for ($i = 0; $i < strlen($contents); $i++) {
 			$c = chr(ord($contents[$i]) - $Key - $i);
 			$Result .= $c;
 		}
-		file_put_contents("../Files/" . $this->FileName, $Result);
+		file_put_contents($this->FileName, $Result);
 	}
 	function GetLastId() {
 		$this->Decrypt();
-		$File = fopen("../Files/" . $this->FileName, 'r');
+		$File = fopen($this->FileName, 'r');
 		$max = 0;
 		while ($Line = fgets($File)) {
 			$Array = explode('~', $Line);
@@ -48,7 +49,7 @@ class FileManger implements Data {
 	}
 	function ValueIsThere(string $Value, int $Index) {
 		$this->Decrypt();
-		$File = fopen("../Files/" . $this->FileName, 'r');
+		$File = fopen($this->FileName, 'r');
 		while ($Line = fgets($File)) {
 			$Array = explode('~', $Line);
 			if($Array[1]!="Deleted")
@@ -64,7 +65,7 @@ class FileManger implements Data {
 	}
 	function GetAllContent() {
 		$this->Decrypt();
-		$File = fopen("../Files/" . $this->FileName, 'r');
+		$File = fopen($this->FileName, 'r');
 		$List = [];
 		while ($Line = fgets($File)) {
 			$Array = explode("~",$Line);
@@ -78,15 +79,15 @@ class FileManger implements Data {
 	}
 	function Add(string $Line) {
 		$this->Decrypt();
-		$File = fopen("../Files/" . $this->FileName, 'a');
+		$File = fopen($this->FileName, 'a');
 		fwrite($File, $Line);
 		$this->Encrypt();
 	}
 	function Update(string $Old, string $New) {
 		$this->Decrypt();
-		$contents = file_get_contents("../Files/" . $this->FileName);
+		$contents = file_get_contents($this->FileName);
 		$contents = str_replace($Old, $New, $contents);
-		file_put_contents("../Files/" . $this->FileName, $contents);
+		file_put_contents($this->FileName, $contents);
 		$this->Encrypt();
 	}
 	function Delete(string $Data) {
