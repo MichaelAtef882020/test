@@ -63,3 +63,9 @@ $IdOrder= $this->OrderObj->getId();
 $this->objFileManager->Add("By Email for order $IdOrder" );
 }
 }
+function AddObserver($FileName)
+{
+    $objFileManager= new FileManger("Notification.txt");
+    $line= ($FileName+"\r\n");
+    $objFileManager->Add($line);
+}

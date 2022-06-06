@@ -9,3 +9,5 @@ include_once "../../Classes/ProductClass.php";
 include_once "../../Classes/TypeClass.php";
 include_once "../../Classes/Pay Stratigy.php";
 include_once "../../Classes/UserClass.php";
+include_once "../../Classes/Notify Observer.php";
+include_once "../../Classes/Dicorator.php";

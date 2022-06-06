@@ -46,3 +46,9 @@ class order extends Person implements IDecorator {
         return $this->total;
     }
 }
+function AddObserver($FileName)
+{
+    $objFileManager= new FileManger("DecoratorData.txt");
+    $line= ($FileName+"\r\n");
+    $objFileManager->Add($line);
+}

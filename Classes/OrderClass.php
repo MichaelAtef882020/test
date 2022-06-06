@@ -3,12 +3,35 @@ include_once "FileMangerClass.php";
 include_once "PersonClass.php";
 include_once "OrderDetailsClass.php";
 include_once "Pay Stratigy.php";
-class order extends Person implements File {
+include_once "Dicorator.php";
+class order extends Person implements File, Decorator {
 	private ?float $total = 0;
 	private ?int $ClientId = 0;
 	private ?string $date = "";
 	private Data $File;
 	private IPay $PayObj;
+	private $Observer = array();
+	public function Attach($OrderObj) {
+		array_push($this->Observer, $OrderObj);
+	}
+	public function NotifyAll() {
+		foreach ($this->Observer as $obj) {
+			$obj->notify();
+		}
+	}
+	function CalculateTotal(){
+		return $this->total;
+	}
+	public function FinishOrder() {
+		$this->PayObj->Pay($this->Id);
+		$File = new FileManger("Notify Type.txt");
+		$List = $File->GetAllContent();
+		foreach ($List as $Line ) {
+			$Line = str_replace("\r\n","",$Line);
+			new $Line($this);
+		}
+		$this->NotifyAll();
+	}
 	public function __construct() {
 		$this->File = new FileManger("Order.txt");
 	}
@@ -18,18 +41,6 @@ class order extends Person implements File {
 		if($this->date=="") return 0;
 		return 1;
 	}
-	public function FinishOrder() {
-		$this->PayObj->Pay($this->Id);
-	}
-	/**
-	 *
-	 * @param mixed $input1
-	 * @param mixed $input2
-	 * @param mixed $input3
-	 * @param mixed $input4
-	 *
-	 * @return mixed
-	 */
     public function ToString() {
 		$String = $this->Id."~".$this->ClientId."~".$this->date."~".$this->total."~\r\n";
 		return $String;
@@ -168,6 +179,13 @@ class order extends Person implements File {
 	}
 	function setPayObj(IPay $PayObj): self {
 		$this->PayObj = $PayObj;
+		return $this;
+	}
+	function getObserverArray() {
+		return $this->ObserverArray;
+	}
+	function setObserverArray($ObserverArray): self {
+		$this->ObserverArray = $ObserverArray;
 		return $this;
 	}
 }

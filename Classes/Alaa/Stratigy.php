@@ -29,3 +29,9 @@ class Visa implements Ipay
         $this->ObjFileManager->Add("Pay Visa for $OrderId");
     }
 }
+function AddStratigie($FileName)
+{
+    $objFileManager= new FileManger("Payments Type");
+    $line= ($FileName+"\r\n");
+    $objFileManager->Add($line);
+}

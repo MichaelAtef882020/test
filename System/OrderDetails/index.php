@@ -8,7 +8,7 @@ $Servis = $User->GetServices();
 HTML::Header($User->getType());
 $Form = new Form();
 $Form->setActionFile("#");
-$Header = "<a href='Order.php'>Daily Activity</a>";
+$Header = "<a href='../Order/index.php'>Daily Activity</a>";
 $Form->setTitle("Daily Activity Details for " . $Header . " " . $_GET["OrderId"]);
 $Select = new Select();
 $Select->setName("ProductId");
