@@ -52,12 +52,9 @@ class FileManger implements Data {
 		$File = fopen($this->FileName, 'r');
 		while ($Line = fgets($File)) {
 			$Array = explode('~', $Line);
-			if($Array[1]!="Deleted")
-			{
-				if ($Array[$Index] == $Value) {
-					$this->Encrypt();
-					return $Line;
-				}
+			if ($Array[$Index] == $Value) {
+				$this->Encrypt();
+				return $Line;
 			}
 		}
 		$this->Encrypt();

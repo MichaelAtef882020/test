@@ -2,14 +2,12 @@
 if (session_id() == '') {
 	session_start();
 }
-abstract class IDisplayInput
-{
+abstract class IDisplayInput {
 	protected $Name;
 	protected $Type;
 	protected $Text;
 	protected $Value;
-	public function __construct($Name = "NULL", $Text = "NULL", $Type = "NULL", $Value = null)
-	{
+	public function __construct($Name = "NULL", $Text = "NULL", $Type = "NULL", $Value = null) {
 		if ($Name == "NULL") {
 			$this->Name = "NULL";
 			$this->Type = "NULL";
@@ -23,52 +21,41 @@ abstract class IDisplayInput
 		}
 	}
 	public abstract function Display();
-	function getName()
-	{
+	function getName() {
 		return $this->Name;
 	}
-	function setName($Name): self
-	{
+	function setName($Name): self {
 		$this->Name = $Name;
 		return $this;
 	}
-	function getType()
-	{
+	function getType() {
 		return $this->Type;
 	}
-	function setType($Type): self
-	{
+	function setType($Type): self {
 		$this->Type = $Type;
 		return $this;
 	}
-	function AllIsSet()
-	{
+	function AllIsSet()	{
 		if ($this->Name != "NULL" && $this->Type != "NULL" && $this->Text != "NULL") return 1;
 		return 0;
 	}
-	function getText()
-	{
+	function getText() {
 		return $this->Text;
 	}
-	function setText($Text): self
-	{
+	function setText($Text): self {
 		$this->Text = $Text;
 		return $this;
 	}
-	function getValue()
-	{
+	function getValue()	{
 		return $this->Value;
 	}
-	function setValue($Value): self
-	{
+	function setValue($Value): self {
 		$this->Value = $Value;
 		return $this;
 	}
 }
-class Submit extends IDisplayInput
-{
-	public function __construct($Name = "NULL", $Text = "NULL", $Type = "NULL", $Value = null)
-	{
+class Submit extends IDisplayInput {
+	public function __construct($Name = "NULL", $Text = "NULL", $Type = "NULL", $Value = null) 	{
 		$this->Type = "submit";
 		if ($Name == "NULL") {
 			$this->Name = "NULL";
@@ -82,8 +69,7 @@ class Submit extends IDisplayInput
 			else $this->Value = $Value;
 		}
 	}
-	function Display()
-	{
+	function Display() 	{
 		if (isset($this->Name) && isset($this->Text)) { ?>
 			<div class="mt-5">
 				<button type="submit" name=<?php echo $this->Name ?>>
@@ -93,8 +79,7 @@ class Submit extends IDisplayInput
 		<?php	}
 	}
 }
-class Select extends IDisplayInput
-{
+class Select extends IDisplayInput {
 	function Display()
 	{ ?>
 		<div>
@@ -120,8 +105,7 @@ class Select extends IDisplayInput
 		</div>
 	<?php }
 }
-class CheckBox extends IDisplayInput
-{
+class CheckBox extends IDisplayInput {
 	public function Display()
 	{ ?>
 		<label class="Check"><?php echo $this->Text ?>
@@ -129,8 +113,7 @@ class CheckBox extends IDisplayInput
 			<span class="checkmark"></span></label>
 	<?php }
 }
-class Text extends IDisplayInput
-{
+class Text extends IDisplayInput {
 	public function Display()
 	{ ?>
 		<div>
@@ -142,8 +125,7 @@ class Text extends IDisplayInput
 	<?php }
 }
 // Form aggregate array Inputs
-class Form
-{
+class Form {
 	private $Title;
 	private $ActionFile;
 	private $Inputs;
@@ -301,8 +283,7 @@ class Form
 }
 
 // Sealed class
-class HTML
-{
+class HTML {
 	private function __construct()
 	{
 	}
